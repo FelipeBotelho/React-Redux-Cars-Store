@@ -5,6 +5,8 @@ import { Car } from "../../components/car";
 import Carousel, { Dots, slidesToShowPlugin } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 import { useState } from "react";
+import { useMediaQuery } from "react-responsive";
+import { SCREENS } from "../../components/responsive";
 
 const TopCarsContainer = styled.div`
   ${tw`
@@ -44,6 +46,8 @@ const CarsContainer = styled.div`
 
 export function TopCars() {
   const [current, setCurrent] = useState(0);
+
+  const isMobile = useMediaQuery({ maxWidth: SCREENS.sm });
 
   const testCar: ICar = {
     name: "Audi S3 Car",
@@ -116,7 +120,11 @@ export function TopCars() {
             },
           }}
         />
-        <Dots value={current} onChange={setCurrent} number={cars.length} />
+        <Dots
+          value={current}
+          onChange={setCurrent}
+          number={isMobile ? cars.length : cars.length / 3}
+        />
       </CarsContainer>
     </TopCarsContainer>
   );
